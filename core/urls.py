@@ -21,8 +21,7 @@ from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('MVC.urls',namespace='MVC')), # test namespace='Pharmacy'
-    path('cart/', include('cart.urls',namespace='cart')),
+    path('', include('MVC.routes',namespace='MVC')), # test namespace='Pharmacy'
 ]
 
 # Media Folder

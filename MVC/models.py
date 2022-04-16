@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-
 class ListingManager(models.Manager):
     def get_queryset(self):
         return super(ListingManager, self).get_queryset().filter(for_sale=True) # is_active => for_sale
@@ -51,67 +50,58 @@ class Listing(models.Model):
     def __str__(self):
         return self.name
 
+from decimal import Decimal
 
-# class Order(models.Model):
-#     type0 = models.ForeignKey(Type,related_name='orders', on_delete=models.CASCADE)
-#     name = models.CharField(max_length=255, db_index=True)
-#     slug = models.SlugField(max_length=255, unique=True)
-#     date = models.DateTimeField(auto_now_add=True)
-#     transaction = models.DecimalField(max_digits=8, decimal_places=2)
-#     prescription = models.ImageField(upload_to='images/prescriptions')
-#     is_valid = models.BooleanField(default=False)
-#     is_complete = models.BooleanField(default=False)
+class Cart():
+    def __init__(self, request):
+        self.session = request.session
+        cart = self.session.get('session_key')
+        if 'session_key' not in request.session:
+            cart = self.session['session_key'] = {}
+        self.cart = cart
 
-#     class Meta:
-#         verbose_name_plural = 'orders'
+    def add(self, listing, qty):
+        listing_id = str(listing.id)
 
-#     def __str__(self):
-#         return self.name
+        if listing_id in self.cart:
+            self.cart[listing_id]['qty'] = qty
+        else:
+            self.cart[listing_id] = {'price': str(listing.price), 'qty': qty}
 
+        self.save()
 
-# class Customer(models.Model):
-#     name = models.CharField(max_length=255, db_index=True)
-#     age = models.IntegerField()
-#     email = models.CharField(max_length=255)
-#     slug = models.SlugField(max_length=255, unique=True)
-#     image = models.ImageField(upload_to='images/customers')
-#     username = models.CharField(max_length=255, unique=True)
-#     password = models.CharField(max_length=25)
-#     is_verified = models.BooleanField(default=False)
+    def __iter__(self):
+        listing_ids = self.cart.keys()
+        listings = Listing.listings.filter(id__in=listing_ids)
+        cart = self.cart.copy()
 
-#     class Meta:
-#         verbose_name_plural = 'customers'
+        for listing in listings:
+            cart[str(listing.id)]['listing'] = listing
 
-#     def __str__(self):
-#         return self.name
+        for item in cart.values():
+            item['price'] = Decimal(item['price'])
+            item['total_price'] = item['price'] * item['qty']
+            yield item
 
+    def __len__(self):
+        return sum(item['qty'] for item in self.cart.values())
 
-# class Employee(models.Model):
-#     name = models.CharField(max_length=255, db_index=True)
-#     email = models.CharField(max_length=255)
-#     slug = models.SlugField(max_length=255, unique=True)
-#     image = models.ImageField(upload_to='images/employees')
-#     username = models.CharField(max_length=255, unique=True)
-#     password = models.CharField(max_length=25)
-#     salary = models.DecimalField(max_digits=12, decimal_places=2)
-#     log = models.TextField(blank=True)
-#     date_joined = models.DateTimeField(auto_now_add=True)
+    def update(self, listing, qty):
+        listing_id = str(listing)
+        if listing_id in self.cart:
+            self.cart[listing_id]['qty'] = qty
+        self.save()
 
-#     class Meta:
-#         verbose_name_plural = 'employees'
+    def get_total_price(self):
+        return sum(Decimal(item['price']) * item['qty'] for item in self.cart.values())
 
-#     def __str__(self):
-#         return self.name
+    def delete(self, listing):
+        listing_id = str(listing)
 
-# class Manager(models.Model):
-#     name = models.CharField(max_length=255, db_index=True)
-#     email = models.CharField(max_length=255)
-#     slug = models.SlugField(max_length=255, unique=True)
-#     username = models.CharField(max_length=255, unique=True)
-#     password = models.CharField(max_length=25)
-    
-#     class Meta:
-#         verbose_name_plural = 'managers'
+        if listing_id in self.cart:
+            del self.cart[listing_id]
+            print(listing_id)
+            self.save()
 
-#     def __str__(self):
-#         return self.name
+    def save(self):
+        self.session.modified = True

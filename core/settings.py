@@ -66,7 +66,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 # Access categories function from anywhere
                 'MVC.controllers.categories',
-                'cart.views.cart',
+                'MVC.controllers.cart',
             ],
         },
     },
