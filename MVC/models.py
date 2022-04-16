@@ -5,7 +5,7 @@ from django.urls import reverse
 
 class ListingManager(models.Manager):
     def get_queryset(self):
-        return super(ListingManager, self).get_queryset().filter(for_sale=True) # is_active => for_sale
+        return super(ListingManager, self).get_queryset().filter(for_sale=True)
 
 
 class Category(models.Model):
@@ -14,7 +14,7 @@ class Category(models.Model):
     details = models.TextField(blank=True)
 
     class Meta:
-        verbose_name_plural = 'Categories'      # categories => Categories
+        verbose_name_plural = 'Categories'
 
     def get_absolute_url(self):
         return reverse('MVC:category_list', args=[self.slug])
@@ -25,7 +25,6 @@ class Category(models.Model):
 
 class Listing(models.Model):
     category = models.ForeignKey(Category, related_name='listing', on_delete=models.CASCADE)
-    #!OLD type0 = models.ForeignKey(Type,related_name='listing', on_delete=models.CASCADE)
     created_by = models.ForeignKey(User, related_name='listing_creator', on_delete=models.CASCADE)
     name = models.CharField(max_length=255, db_index=True)
     slug = models.SlugField(max_length=255, unique=True)
@@ -45,10 +44,11 @@ class Listing(models.Model):
         verbose_name_plural = 'Listings'
     
     def get_absolute_url(self):
-        return reverse('MVC:listing_detail', args=[self.slug])   #was'store:product_detail' => MVC:listing_detail
+        return reverse('MVC:listing_detail', args=[self.slug])
     
     def __str__(self):
         return self.name
+
 
 from decimal import Decimal
 

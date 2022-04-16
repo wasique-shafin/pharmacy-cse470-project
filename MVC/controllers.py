@@ -5,27 +5,28 @@ from django.shortcuts import get_object_or_404
 
 from .models import Category, Listing, Cart # Product => Listing
 
-
+# Context Processors
 def categories(request):
     return {
         'categories': Category.objects.all()
     }
 
 
-def listing_all(request): # all_products => all_listings   #R all_listings => listing_all
-    listings = Listing.objects.all()   # products => listings; Product => Listing
-    return render(request, 'home.html', {'listings': listings}) # store/home.html => home.html; products => listings
+def listing_all(request):
+    listings = Listing.objects.all()
+    return render(request, 'home.html', {'listings': listings})
 
 
 def category_list(request, category_slug=None):
     category = get_object_or_404(Category, slug=category_slug)
-    listings = Listing.objects.filter(category=category) # products => listings;  Product => Listing
-    return render(request, 'category.html', {'category': category, 'listings': listings}) # store/products/category.html => category.html
+    listings = Listing.objects.filter(category=category)
+    return render(request, 'category.html', {'category': category, 'listings': listings})
 
 
-def listing_detail(request, listing_slug): # product_detail => listing_detail;  slug => listing_slug
-    listing = get_object_or_404(Listing, slug=listing_slug, for_sale=True) # product => listing; Product => Listing; slug => listing_slug; is_active => for_sale
-    return render(request, 'listing.html', {'listing': listing})  # store/products/detail.html => listing.html; product => listing
+def listing_detail(request, listing_slug):
+    listing = get_object_or_404(Listing, slug=listing_slug, for_sale=True)
+    return render(request, 'listing.html', {'listing': listing})
+
 
 from django.http import JsonResponse
 
@@ -67,6 +68,7 @@ def cart_update(request):
         carttotal = cart.get_total_price()
         response = JsonResponse({'qty': cartqty, 'subtotal': carttotal})
         return response
+
 
 # Context Processors
 def cart(request):

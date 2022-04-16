@@ -9,7 +9,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ['name','details','slug','price','in_stock','for_sale','date_added','date_updated'] # title instead of name
+    list_display = ['name','details','slug','price','in_stock','for_sale','date_added','date_updated']
     list_filter = ['need_prescription','in_stock','for_sale']
     list_editable = ['price','in_stock','for_sale']
-    prepopulated_fields = {'slug':('name',)}    # title instead of name
+    prepopulated_fields = {'slug':('name',)}
