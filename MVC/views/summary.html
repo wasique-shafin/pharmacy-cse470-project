@@ -20,7 +20,7 @@
             <div class="col border-bottom">
               <div class="row p-3">
                 <div class="col-6">Online Price</div>
-                <div class="col-6 text-end"><span class="h6 fw-bold">£{{ listing.price }}</span></div>
+                <div class="col-6 text-end"><span class="h6 fw-bold">{{ listing.price }} Tk.</span></div>
               </div>
             </div>
             <div class="col">
@@ -57,9 +57,9 @@
       </div> {% endcomment %}
       <div class="text-end">
           
-        <div class="">Sub Total: <span class="fw-bold">£</span><div id="subtotal" class="d-inline-flex fw-bold">{{cart.get_subtotal_price}}</div></div>
-        <div id="">Shipping <span class="small">(Next day delivery)</span>: <span class="fw-bold">£11.50</span></div>
-        <div class="pt-2">Total to pay: <span class="fw-bold h5">£</span><span id="total" class="fw-bold h5">{{cart.get_total_price}}</span></div>
+        <div class="">Sub Total: <div id="subtotal" class="d-inline-flex fw-bold">{{cart.get_subtotal_price}}</div><span class="fw-bold"> Tk.</span></div>
+        <div id="">Shipping : <span class="fw-bold">50.00 Tk.</span></div>
+        <div class="pt-2">Total to pay: <span id="total" class="fw-bold h5">{{cart.get_total_price}}</span><span class="fw-bold h5"> Tk.</span></div>
         
       </div>
       <div class="order-md-last p-0 order-3">
@@ -86,8 +86,9 @@
         },
         success: function (json) {
           $('.listing-item[data-index="' + lisdid + '"]').remove();
-          document.getElementById("subtotal").innerHTML = json.subtotal;
           document.getElementById("cart-qty").innerHTML = json.qty
+          document.getElementById("subtotal").innerHTML = json.subtotal
+          document.getElementById("total").innerHTML = json.total
         },
         error: function (xhr, errmsg, err) {}
       });
@@ -109,6 +110,7 @@
         success: function (json) {
           document.getElementById("cart-qty").innerHTML = json.qty
           document.getElementById("subtotal").innerHTML = json.subtotal
+          document.getElementById("total").innerHTML = json.total
         },
         error: function (xhr, errmsg, err) {}
       });

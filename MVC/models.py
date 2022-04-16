@@ -92,8 +92,11 @@ class Cart():
             self.cart[listing_id]['qty'] = qty
         self.save()
 
-    def get_total_price(self):
+    def get_subtotal_price(self):
         return sum(Decimal(item['price']) * item['qty'] for item in self.cart.values())
+
+    def get_total_price(self):
+        return (sum(Decimal(item['price']) * item['qty'] for item in self.cart.values())+50)
 
     def delete(self, listing):
         listing_id = str(listing)
