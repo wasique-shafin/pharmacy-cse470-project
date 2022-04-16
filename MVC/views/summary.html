@@ -78,7 +78,7 @@
       var lisdid = $(this).data('index');
       $.ajax({
         type: 'POST',
-        url: '{% url "cart:cart_delete" %}',
+        url: '{% url "MVC:cart_delete" %}',
         data: {
           listingid: $(this).data('index'),
           csrfmiddlewaretoken: "{{csrf_token}}",
@@ -99,7 +99,7 @@
       var lisdid = $(this).data('index');
       $.ajax({
         type: 'POST',
-        url: '{% url "cart:cart_update" %}',
+        url: '{% url "MVC:cart_update" %}',
         data: {
           listingid: $(this).data('index'),
           listingqty: $('#select' + lisdid + ' option:selected').text(),

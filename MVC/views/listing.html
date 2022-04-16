@@ -49,7 +49,7 @@ Pharmacy - {{ listing.name }} {{ listing.category }}
         e.preventDefault();
         $.ajax({
             type: 'POST',
-            url: '{% url "cart:cart_add" %}',
+            url: '{% url "MVC:cart_add" %}',
             data: {
                 listingid: $('#add-button').val(),
                 listingqty: $('#select option:selected').text(),
