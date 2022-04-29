@@ -1,7 +1,7 @@
 from django.db import models
 
-from django.contrib.auth.models import User
 from django.urls import reverse
+from django.conf import settings
 
 class ListingManager(models.Manager):
     def get_queryset(self):
@@ -25,7 +25,7 @@ class Category(models.Model):
 
 class Listing(models.Model):
     category = models.ForeignKey(Category, related_name='listing', on_delete=models.CASCADE)
-    created_by = models.ForeignKey(User, related_name='listing_creator', on_delete=models.CASCADE)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='listing_creator', on_delete=models.CASCADE)
     name = models.CharField(max_length=255, db_index=True)
     slug = models.SlugField(max_length=255, unique=True)
     image = models.ImageField(upload_to='images/listings', default='images/default.png')
