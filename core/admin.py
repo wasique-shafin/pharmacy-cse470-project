@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from .models import Category, Listing
+from MVC.models import Category, Listing, UserBase
+
+admin.site.register(UserBase)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

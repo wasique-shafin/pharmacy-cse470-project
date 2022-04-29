@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MVC',
-    'account',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -116,10 +116,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # STRIPE_ENDPOINT_SECRET = ''
 # stripe listen --forward-to localhost:8000/payment/webhook/
 
-# Custom user model
-AUTH_USER_MODEL = 'account.UserBase'
+# User model
+AUTH_USER_MODEL = 'MVC.UserBase'
 LOGIN_REDIRECT_URL = '/account/dashboard'
 LOGIN_URL = '/account/login/'
-
-# Email setting
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+LOGIN_FORM = 'MVC.controllers'
