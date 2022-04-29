@@ -10,7 +10,8 @@
 ### Install Prerequisites
 - `python`
 - `python-virtualenv`
-    - Or `$ pip install django pillow six django-countries`
+    -`$ pip install django pillow six django-countries`
+        - Or `$ pip install -r requirements.txt`
 ### Download Project
 - `$ git clone --depth 1 https://github.com/wasique-shafin/pharmacy-cse470-project`
 ### Move into Project Folder
