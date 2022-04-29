@@ -1,14 +1,12 @@
-# Create your models here.
 from django.db import models
 
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
-from django.core.mail import send_mail
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 
 
-class CustomAccountManager(BaseUserManager):
+class UserAccountManager(BaseUserManager):
 
     def create_superuser(self, email, user_name, password, **other_fields):
 
@@ -43,22 +41,20 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     user_name = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=150, blank=True)
+    last_name = models.CharField(max_length=150, blank=True)
     about = models.TextField(_(
         'about'), max_length=500, blank=True)
-    # Delivery details
     country = CountryField()
-    phone_number = models.CharField(max_length=15, blank=True)
+    phone = models.CharField(max_length=15, blank=True)
     postcode = models.CharField(max_length=12, blank=True)
-    address_line_1 = models.CharField(max_length=150, blank=True)
-    address_line_2 = models.CharField(max_length=150, blank=True)
+    address = models.CharField(max_length=150, blank=True)
     town_city = models.CharField(max_length=150, blank=True)
-    # User Status
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
 
-    objects = CustomAccountManager()
+    objects = UserAccountManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['user_name']
@@ -66,15 +62,6 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = "Accounts"
         verbose_name_plural = "Accounts"
-
-    def email_user(self, subject, message):
-        send_mail(
-            subject,
-            message,
-            'l@1.com',
-            [self.email],
-            fail_silently=False,
-        )
 
     def __str__(self):
         return self.user_name
