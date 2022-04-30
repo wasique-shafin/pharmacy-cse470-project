@@ -20,7 +20,7 @@
 - `$ source env/bin/activate` for **Linux/MacOS**
 - `$ env\Scripts\activate.bat` for **Windows**
 - `$ pip install -r requirements.txt`
-    - Or, `$ pip install django pillow six django-countries`
+    - Or, `$ pip install django pillow six django-countries coverage`
 ### Activate Python Virtual Environment
 - `$ source env/bin/activate` for **Linux/MacOS**
 - `$ env\Scripts\activate.bat` for **Windows**
