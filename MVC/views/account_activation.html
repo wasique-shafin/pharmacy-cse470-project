@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% load static %} {% block title %}Account Activation{%endblock %} {% block content %}
+<main class="pt-5">
+  <div class="container" style="max-width: 1000px">
+    <div class="col-12">
+      <h3 class="h2">Account Activated</h3>
+    </div>
+    <div class="col-12 d-flex justify-content-between">
+      <div>Your account has successfully created</div>
+    </div>
+    <div class="col-12 d-flex justify-content-between">
+        <div><a href="{% url "account:login" %}">Click to log in</a></div>
+      </div>
+  </div>
+</main>
+{% endblock %}

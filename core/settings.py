@@ -118,6 +118,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # User model
 AUTH_USER_MODEL = 'MVC.UserBase'
-LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/account/login/'
 LOGIN_FORM = 'MVC.controllers'

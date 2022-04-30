@@ -157,11 +157,11 @@ class UserEditForm(forms.ModelForm):
             attrs={'class': 'form-control mb-3', 'placeholder': 'email', 'id': 'form-email', 'readonly': 'readonly'}))
 
     user_name = forms.CharField(
-        label='Firstname', min_length=4, max_length=50, widget=forms.TextInput(
+        label='Username', min_length=4, max_length=50, widget=forms.TextInput(
             attrs={'class': 'form-control mb-3', 'placeholder': 'Username', 'id': 'form-firstname', 'readonly': 'readonly'}))
 
     first_name = forms.CharField(
-        label='Username', min_length=4, max_length=50, widget=forms.TextInput(
+        label='Firstname', min_length=4, max_length=50, widget=forms.TextInput(
             attrs={'class': 'form-control mb-3', 'placeholder': 'Firstname', 'id': 'form-lastname'}))
 
     class Meta:
@@ -176,7 +176,7 @@ class UserEditForm(forms.ModelForm):
 
 @login_required
 def dashboard(request):
-    return render(request, 'account/user/dashboard.html')
+    return render(request, 'dashboard.html')
 
 
 @login_required
@@ -189,8 +189,7 @@ def edit_details(request):
     else:
         user_form = UserEditForm(instance=request.user)
 
-    return render(request,
-                  'account/user/edit_details.html', {'user_form': user_form})
+    return render(request,'edit_details.html', {'user_form': user_form})
 
 
 @login_required
@@ -199,7 +198,7 @@ def delete_user(request):
     user.is_active = False
     user.save()
     logout(request)
-    return redirect('account:delete_confirmation')
+    return redirect('account:account_deletion')  # delete_confirmation => account_deletion
 
 
 def account_register(request):
@@ -215,8 +214,8 @@ def account_register(request):
             user.set_password(registerForm.cleaned_data['password'])
             user.is_active = True
             user.save()
-            return render(request, 'account/registration/account_activation.html')
+            return render(request, 'account_activation.html')
     else:
         registerForm = RegistrationForm()
-    return render(request, 'account/registration/register.html', {'form': registerForm})
+    return render(request, 'register.html', {'form': registerForm})
 

@@ -16,11 +16,12 @@ urlpatterns = [
      path('cart/add/', controllers.cart_add, name='cart_add'),
      path('cart/delete/', controllers.cart_delete, name='cart_delete'),
      path('cart/update/', controllers.cart_update, name='cart_update'),
-     path('account/login/', auth_views.LoginView.as_view(template_name='account/registration/login.html',form_class=UserLoginForm), name='login'),
+     path('account/login/', auth_views.LoginView.as_view(template_name='login.html',form_class=UserLoginForm), name='login'),
      path('account/logout/', auth_views.LogoutView.as_view(next_page='/account/login/'), name='logout'),
      path('account/register/', controllers.account_register, name='register'),
      path('account/dashboard/', controllers.dashboard, name='dashboard'),
      path('account/profile/edit/', controllers.edit_details, name='edit_details'),
      path('account/profile/delete_user/', controllers.delete_user, name='delete_user'),
-     path('account/profile/delete_confirm/', TemplateView.as_view(template_name="account/user/delete_confirm.html"), name='delete_confirmation'),
+     path('account/profile/delete_confirm/', TemplateView.as_view(template_name="account_deletion.html"), name='account_deletion'),
+     # delete_confirm => account_deletion ; # delete_confirmation => account_deletion
 ]
