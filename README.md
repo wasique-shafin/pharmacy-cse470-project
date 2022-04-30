@@ -10,6 +10,7 @@
 ### Install Prerequisites
 - `python`
 - `python-virtualenv`
+    - Or, `$ pip install virtualenv`
 ### Download Project
 - `$ git clone --depth 1 https://github.com/wasique-shafin/pharmacy-cse470-project`
 ### Move into Project Folder
