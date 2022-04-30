@@ -5,6 +5,7 @@
 - **Controllers** are in `MVC/controllers.py`
 - **Views** are in `MVC/views/*`
 - **Routes** are in `MVC/routes.py`
+- **Tests** are in `MVC/tests.py`
 ---
 ## Run Project
 ### Install Prerequisites
